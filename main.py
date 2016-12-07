@@ -72,6 +72,8 @@ class Capital(Resource):
                     return {}, 400
                             
                 # print("hi")
+                if 'id' in country_from_input:
+                    payloadid = country_from_input['id']
                 if 'country' in country_from_input:
                     countryName = country_from_input['country']
                 if 'name' in country_from_input:
@@ -85,7 +87,7 @@ class Capital(Resource):
                     longitude = country_from_input['location']['longitude']
                 # print(name)
                 capitals = countries.Capitals()
-                capitals.store_capital(id, countryName, name, countryCode, continent, latitude, longitude)
+                capitals.store_capital(id, payloadid, countryName, name, countryCode, continent, latitude, longitude)
                 return "hi", 200
 
             except Exception as e:
