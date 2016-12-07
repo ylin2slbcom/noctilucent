@@ -34,9 +34,16 @@ class status(Resource):
         }, 200
         #return constants.TEAM_NAME+'  is running!'
 
+
 @api.route('/api/capitals')
-@api.route('/api/capitals/<string:id>')
 class Capitals(Resource):
+    def get(self):
+        pass
+
+
+
+@api.route('/api/capitals/<string:id>')
+class Capital(Resource):
     def get(self, id=None):
         if id is None:
             return jsonify(countries.Capitals().fetch_capitals()), 200
