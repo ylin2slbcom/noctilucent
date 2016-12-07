@@ -72,10 +72,7 @@ class Capital(Resource):
                     return {}, 400
                 
                 
-                print("hi")
-                # obj = request.get_json()['country']
-                if 'id' in country_from_input:
-                    rowid = country_from_input['id']
+                # print("hi")
                 if 'country' in country_from_input:
                     countryName = country_from_input['country']
                 if 'name' in country_from_input:
@@ -87,9 +84,9 @@ class Capital(Resource):
                 if 'location' in country_from_input:
                     latitude = country_from_input['location']['latitude']
                     longitude = country_from_input['location']['longitude']
-                print(name)
+                # print(name)
                 capitals = countries.Capitals()
-                capitals.store_capital(rowid, countryName, name, countryCode, continent, latitude, longitude)
+                capitals.store_capital(id, countryName, name, countryCode, continent, latitude, longitude)
                 return "hi", 200
 
             except Exception as e:
