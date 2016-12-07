@@ -22,13 +22,12 @@ api = Api(app, version='1.0', title=constants.TEAM_NAME)
 @api.route('/status')
 class status(Resource):
     def get(self):
-        return jsonify({
+        return {
         'insert': False,
         'fetch': False,
         'delete': False,
-        'list': False,
-        'test':False
-        }), 200
+        'list': False
+        }, 200
         #return constants.TEAM_NAME+'  is running!'
 
 
