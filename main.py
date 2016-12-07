@@ -10,9 +10,13 @@ from flask_restplus import Resource, Api, reqparse, fields
 
 
 import utility
+from flask import Blueprint
 
 import constants
+import countries
 
+
+api = Blueprint('capitals', __name__)
 
 app = Flask(__name__)
 api = Api(app, version='1.0', title=constants.TEAM_NAME)
@@ -37,7 +41,9 @@ class Capitals(Resource):
         return {}, 200
 
     def put(self, id):
-        pass
+        capitals = countries.Capitals()
+        capitals.store_capital("Country1")
+        # pass
 
     def delete(self, id):
         pass
