@@ -19,7 +19,7 @@ api = Api(app, version='1.0', title=constants.TEAM_NAME)
 
 
 
-@api.route('/status')
+@api.route('/api/status')
 class status(Resource):
     def get(self):
         return {
