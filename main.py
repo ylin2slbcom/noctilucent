@@ -99,6 +99,7 @@ class Capital(Resource):
         except Exception as e:
             logging.exception("Delete failed")
 
+
 def store_capital_as_string(capital, id): 
     datastore_client = datastore.Client(project=constants.PROJECT_ID) 
     key = datastore_client.key('capital_string', id) 
@@ -118,6 +119,20 @@ def retrieve_capital_from_string(id):
         return {} 
     print(entity['json_string']) 
     return json.loads(entity['json_string']) 
+
+def retrieve_capitals_from_string():
+    datastore_client = datastore.Client(project=constants.PROJECT_ID) 
+    query = datastore_client.query(kind='capital_string')
+    results = query.fetch()
+    capitals = []
+    if results is None:
+        return capitals
+    
+    for entity in results:
+        capitals.append(json.loads(entity['json_string']) )
+    return capitals
+
+    
 
 def delete_capital_as_string(id):
     datastore_client = datastore.Client(project=constants.PROJECT_ID) 
