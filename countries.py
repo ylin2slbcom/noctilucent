@@ -16,7 +16,14 @@ class Capitals:
 
         return self.ds.put(entity)
 
-    def fetch_greetings(self):
+    # GET /api/capitals/{id}
+    def fetch_capital(self, id):
+        query = self.ds.query(kind=self.kind)
+        query.add_filter('id', '=', id)
+        return self.get_query_results(query)[0]
+
+    # GET /api/capitals
+    def fetch_capitals(self):
         query = self.ds.query(kind=self.kind)
         query.order = ['-timestamp']
         return self.get_query_results(query)
