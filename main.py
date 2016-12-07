@@ -96,7 +96,7 @@ class Capital(Resource):
 
     def delete(self, id):
         try:
-            countries.Capitals.delete_captial(id)
+            countries.Capitals().delete_capital(id)
             return 200
         except Exception as e:
             logging.exception("Delete failed")
