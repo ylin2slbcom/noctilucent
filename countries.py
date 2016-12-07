@@ -16,12 +16,12 @@ class Capitals:
         key = self.ds.key(self.kind, rowid)
         entity = datastore.Entity(key)
 
-        entity['Country'] = country
-        entity['Name'] = name
-        entity['CountryCode'] = countryCode
-        entity['Continent'] = continent
-        entity['Latitude'] = latitude
-        entity['Longitude'] = longitude              
+        entity['country'] = country
+        entity['name'] = name
+        entity['countryCode'] = countryCode
+        entity['continent'] = continent
+        entity['latitude'] = latitude
+        entity['longitude'] = longitude              
 
         return self.ds.put(entity)
 
@@ -40,9 +40,9 @@ class Capitals:
     @staticmethod
     def nest_geopoint(flat):
         nested = copy.deepcopy(flat)
-        del nested['Latitude']
-        del nested['Longitude']
-        nested['location'] = {'latitude': flat['Latitude'], 'longitude': flat['Longitude']}
+        del nested['latitude']
+        del nested['longitude']
+        nested['location'] = {'latitude': flat['latitude'], 'longitude': flat['longitude']}
         return nested
 
     def get_query_results(self, query):
