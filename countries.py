@@ -57,5 +57,7 @@ class Capitals:
         return results
 
     def delete_captial(self, id):
-        self.ds.delete(self.ds.key("Capitals", id)
+        self.ds.delete(self.ds.key("Capitals", id))
+
+
 
