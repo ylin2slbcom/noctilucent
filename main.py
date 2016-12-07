@@ -85,11 +85,11 @@ class Capital(Resource):
                 if 'continent' in country_from_input:
                     continent = country_from_input['continent']
                 if 'location' in country_from_input:
-                    location = country_from_input['location']
-                print(location)
+                    latitude = country_from_input['location']['latitude']
+                    longitude = country_from_input['location']['longitude']
                 print(name)
                 capitals = countries.Capitals()
-                capitals.store_capital(rowid, countryName, name, countryCode, continent, location)
+                capitals.store_capital(rowid, countryName, name, countryCode, continent, latitude, longitude)
                 return "hi", 200
 
             except Exception as e:
