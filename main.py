@@ -41,7 +41,7 @@ capital_mode = api.model('Capital', {
 class status(Resource):
     def get(self):
         return {
-        'insert': False,
+        'insert': True,
         'fetch': False,
         'delete': False,
         'list': False
@@ -69,8 +69,7 @@ class Capital(Resource):
                 country_from_input = request.get_json()
                 if country_from_input == None:
                     return {}, 400
-                
-                
+                            
                 # print("hi")
                 if 'country' in country_from_input:
                     countryName = country_from_input['country']
