@@ -11,10 +11,9 @@ class Capitals:
         self.kind = "Capitals"
 
     def store_capital(self, rowid, country, name, countryCode, continent, latitude, longitude):
-        key = self.ds.key(self.kind)
+        key = self.ds.key(self.kind, rowid)
         entity = datastore.Entity(key)
 
-        entity['Id'] = rowid
         entity['Country'] = country
         entity['Name'] = name
         entity['CountryCode'] = countryCode
