@@ -28,7 +28,7 @@ class Capitals:
     # GET /api/capitals
     def fetch_capitals(self):
         query = self.ds.query(kind=self.kind)
-        query.order = ['-timestamp']
+        # query.order = ['-timestamp']
         return self.get_query_results(query)
 
     def get_query_results(self, query):
