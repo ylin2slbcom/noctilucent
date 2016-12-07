@@ -27,6 +27,7 @@ class status(Resource):
         'fetch': False,
         'delete': False,
         'list': False,
+        'test':False
         }), 200
         #return constants.TEAM_NAME+'  is running!'
 
