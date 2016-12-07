@@ -67,14 +67,25 @@ class Capital(Resource):
     def put(self, id):
             data = {}
             try:
+                country_from_input = request.get_json()
+                if country_from_input == None:
+                    return {}, 400
+                
+                
                 print("hi")
                 # obj = request.get_json()['country']
-                rowid = request.get_json()['id']
-                countryName = request.get_json()['country']
-                name = request.get_json()['name']
-                countryCode = request.get_json()['countryCode']
-                continent = request.get_json()['continent']
-                location = request.get_json()['location']
+                if 'id' in country_from_input:
+                    rowid = country_from_input['id']
+                if 'country' in country_from_input:
+                    countryName = country_from_input['country']
+                if 'name' in country_from_input:
+                    name = country_from_input['name']
+                if 'countryCode' in country_from_input:
+                    countryCode = country_from_input['countryCode']
+                if 'continent' in country_from_input:
+                    continent = country_from_input['continent']
+                if 'location' in country_from_input:
+                    location = country_from_input['location']
                 print(location)
                 print(name)
                 capitals = countries.Capitals()
