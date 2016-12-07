@@ -14,11 +14,6 @@ class Capitals:
 
     def store_capital(self, rowid, country, name, countryCode, continent, latitude, longitude):
         key = self.ds.key(self.kind, rowid)
-    def delete_captial(self, key):
-        entity = self.fetch_capital(key)
-        if entity is not None:
-            entity.key.delete()
-
         entity = datastore.Entity(key)
 
         entity['country'] = country
