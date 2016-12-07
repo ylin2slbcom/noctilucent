@@ -43,9 +43,9 @@ class status(Resource):
     def get(self):
         return {
         'insert': True,
-        'fetch': False,
-        'delete': False,
-        'list': False
+        'fetch': True,
+        'delete': True,
+        'list': True
         }, 200
 
 
