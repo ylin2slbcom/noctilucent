@@ -31,8 +31,8 @@ class status(Resource):
         #return constants.TEAM_NAME+'  is running!'
 
 
-@api.route('/api/<string:id>')
-class noctilucent(Resource):
+@api.route('/api/capitals/<string:id>')
+class Capitals(Resource):
     def get(self, id):
         return {}, 200
 
