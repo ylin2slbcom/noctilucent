@@ -32,9 +32,8 @@ class Capitals:
 
     # GET /api/capitals/{id}
     def fetch_capital(self, id):
-        query = self.ds.query(kind=self.kind)
-        query.add_filter('id', '=', id)
-        return Capitals.nest_geopoint(self.get_query_results(query)[0])
+        return Capitals.nest_geopoint(self.ds.get(self.ds.key(self.kind, int(id))))
+
 
     # GET /api/capitals
     def fetch_capitals(self):
