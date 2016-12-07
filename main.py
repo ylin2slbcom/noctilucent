@@ -66,18 +66,26 @@ class Capital(Resource):
     def put(self, id):
             data = {}
             try:
-                print("hi")
-                # obj = request.get_json()['country']
-                rowid = request.get_json()['id']
-                countryName = request.get_json()['country']
-                name = request.get_json()['name']
-                countryCode = request.get_json()['countryCode']
-                continent = request.get_json()['continent']
-                location = request.get_json()['location']
-                print(location)
-                print(name)
+                country_from_input = request.get_json()
+                if country_from_input == None:
+                    return {}, 400
+                
+                
+                # print("hi")
+                if 'country' in country_from_input:
+                    countryName = country_from_input['country']
+                if 'name' in country_from_input:
+                    name = country_from_input['name']
+                if 'countryCode' in country_from_input:
+                    countryCode = country_from_input['countryCode']
+                if 'continent' in country_from_input:
+                    continent = country_from_input['continent']
+                if 'location' in country_from_input:
+                    latitude = country_from_input['location']['latitude']
+                    longitude = country_from_input['location']['longitude']
+                # print(name)
                 capitals = countries.Capitals()
-                capitals.store_capital(rowid, countryName, name, countryCode, continent, location)
+                capitals.store_capital(id, countryName, name, countryCode, continent, latitude, longitude)
                 return "hi", 200
 
             except Exception as e:
