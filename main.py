@@ -22,6 +22,20 @@ app = Flask(__name__)
 api = Api(app, version='1.0', title=constants.TEAM_NAME)
 
 
+geo_point_model = api.model('GeoPoint', {
+    'latitude': fields.Float(required=False),
+    'longitude': fields.Float(required=False),
+    })
+
+capital_mode = api.model('Capital', {
+    'id': fields.Integer(required=False),
+    'country': fields.String(required=False),
+    'name': fields.String(required=False),
+    'location': fields.Nested(geo_point_model, required=False),
+    'countryCode': fields.String(required=False),
+    'continent': fields.String(required=False),
+    })
+
 
 @api.route('/api/status')
 class status(Resource):
@@ -37,6 +51,7 @@ class status(Resource):
 
 @api.route('/api/capitals')
 class Capitals(Resource):
+    @api.marshal_list_with(capital_mode)
     def get(self):
         return countries.Capitals().fetch_capitals(), 200
 
@@ -44,9 +59,11 @@ class Capitals(Resource):
 
 @api.route('/api/capitals/<string:id>')
 class Capital(Resource):
+    @api.marshal_with(capital_mode)
     def get(self, id):
         return countries.Capitals().fetch_capital(id), 200
 
+    @api.expect(capital_mode, validate=True)
     def put(self, id):
             data = {}
             try:

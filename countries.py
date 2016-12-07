@@ -5,7 +5,7 @@ from google.cloud import datastore
 class Capitals:
 
     def __init__(self):
-        self.ds = datastore.Client(project="hackathon-team-002")
+        self.ds = datastore.Client(project=constants.PROJECT_ID)
         self.kind = "Capitals"
 
     def store_capital(self, country, name, countryCode, continent):
