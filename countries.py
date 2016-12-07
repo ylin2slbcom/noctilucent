@@ -10,14 +10,16 @@ class Capitals:
         self.ds = datastore.Client(project=constants.PROJECT_ID)
         self.kind = "Capitals"
 
-    def store_capital(self, country, name, countryCode, continent):
+    def store_capital(self, rowid, country, name, countryCode, continent, location):
         key = self.ds.key(self.kind)
         entity = datastore.Entity(key)
 
+        entity['Id'] = rowid
         entity['Country'] = country
         entity['Name'] = name
         entity['CountryCode'] = countryCode
-        entity['Continent'] = continent        
+        entity['Continent'] = continent
+        # entity['Location'] = location              
 
         return self.ds.put(entity)
 

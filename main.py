@@ -69,18 +69,16 @@ class Capital(Resource):
             try:
                 print("hi")
                 # obj = request.get_json()['country']
+                rowid = request.get_json()['id']
                 countryName = request.get_json()['country']
                 name = request.get_json()['name']
                 countryCode = request.get_json()['countryCode']
                 continent = request.get_json()['continent']
-                print(countryName)
+                location = request.get_json()['location']
+                print(location)
                 print(name)
                 capitals = countries.Capitals()
-                # data = base64.b64decode(obj['country'])
-                capitals.store_capital(countryName, name, countryCode, continent)
-                # data = base64.b64decode(obj['message']['data'])
-                # utility.log_info(data)
-                # ret
+                capitals.store_capital(rowid, countryName, name, countryCode, continent, location)
                 return "hi", 200
 
             except Exception as e:
