@@ -6,51 +6,33 @@ import base64
 
 from flask import Flask, request
 from flask import jsonify
+from flask_restplus import Resource, Api, reqparse, fields
 
-import notebook
+
 import utility
+
+import constants
 
 
 app = Flask(__name__)
+api = Api(app, version='1.0', title=constants.TEAM_NAME)
+
+@api.route('/status')
+class status(Resource):
+    def get(self):
+        return constants.TEAM_NAME+'  is running!'
 
 
-@app.route('/')
-def hello_world():
-    """hello world"""
-    return 'Hello World!'
+@api.route('/api/<string:id>')
+class noctilucent(Resource):
+    def get(self, id):
+        return {}, 200
 
-# @app.route('/pubsub/receive', methods=['POST'])
-# def pubsub_receive():
-#     """dumps a received pubsub message to the log"""
+    def put(self, id):
+        pass
 
-#     data = {}
-#     try:
-#         obj = request.get_json()
-#         utility.log_info(json.dumps(obj))
-
-#         data = base64.b64decode(obj['message']['data'])
-#         utility.log_info(data)
-
-#     except Exception as e:
-#         # swallow up exceptions
-#         logging.exception('Oops!')
-
-#     return jsonify(data), 200
-
-# @app.route('/notes', methods=['POST', 'GET'])
-# def access_notes():
-#     """inserts and retrieves notes from datastore"""
-
-#     book = notebook.NoteBook()
-#     if request.method == 'GET':
-#         results = book.fetch_notes()
-#         result = [notebook.parse_note_time(obj) for obj in results]
-#         return jsonify(result)
-#     elif request.method == 'POST':
-#         print json.dumps(request.get_json())
-#         text = request.get_json()['text']
-#         book.store_note(text)
-#         return "done"
+    def delete(self, id):
+        pass
 
 
 @app.errorhandler(500)
@@ -65,4 +47,4 @@ def server_error(err):
 
 if __name__ == '__main__':
     # Used for running locally
-    app.run(host='127.0.0.1', port=3030, debug=True)
+    app.run(host='127.0.0.1', port=8080, debug=True)
