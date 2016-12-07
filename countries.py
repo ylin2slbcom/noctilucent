@@ -56,3 +56,6 @@ class Capitals:
             results.append(dict(entity))
         return results
 
+    def delete_captial(self, id):
+        self.ds.delete(self.ds.key("Capitals", id)
+
