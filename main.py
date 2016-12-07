@@ -48,12 +48,32 @@ class Capital(Resource):
         return jsonify(countries.Capitals().fetch_capital(id)), 200
 
     def put(self, id):
-        capitals = countries.Capitals()
-        capitals.store_capital("Country1")
-        # pass
+            data = {}
+            try:
+                print("hi")
+                # obj = request.get_json()['country']
+                countryName = request.get_json()['country']
+                name = request.get_json()['name']
+                countryCode = request.get_json()['countryCode']
+                continent = request.get_json()['continent']
+                print(countryName)
+                print(name)
+                capitals = countries.Capitals()
+                # data = base64.b64decode(obj['country'])
+                capitals.store_capital(countryName, name, countryCode, continent)
+                # data = base64.b64decode(obj['message']['data'])
+                # utility.log_info(data)
+                # ret
+                return "hi", 200
 
-    def delete(self, id):
-        pass
+            except Exception as e:
+                # swallow up exceptions
+                logging.exception('Oops!')
+
+                # pass
+
+    # def delete(self, id):
+    #     pass
 
 
 @app.errorhandler(500)
