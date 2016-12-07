@@ -17,6 +17,15 @@ import constants
 app = Flask(__name__)
 api = Api(app, version='1.0', title=constants.TEAM_NAME)
 
+@app.route('/api/status')
+def status():
+    return jsonify({
+        'insert': False,
+        'fetch': False,
+        'delete': False,
+        'list': False,
+        }), 200
+
 @api.route('/status')
 class status(Resource):
     def get(self):

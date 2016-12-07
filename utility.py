@@ -1,4 +1,5 @@
 """Utility methods"""
+from __future__ import print_function
 
 import logging
 import os
@@ -21,4 +22,4 @@ def log_info(msg):
     if on_cloud():
         logging.info(msg)
     else:
-        print msg
+        print(msg)
