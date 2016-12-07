@@ -61,7 +61,14 @@ class Capitals(Resource):
 class Capital(Resource):
     @api.marshal_with(capital_mode)
     def get(self, id):
-        return countries.Capitals().fetch_capital(id), 200
+        try:
+            results = countries.Capitals().fetch_capital(id)
+            if results is None:
+                return 'record not found', 404
+            return results, 200
+        except Exception as e:
+            logging.exception(e)
+            return 'failed to fetch record', 404
 
     @api.expect(capital_mode, validate=True)
     def put(self, id):
