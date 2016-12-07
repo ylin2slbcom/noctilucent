@@ -1,6 +1,8 @@
 from datetime import datetime
 from google.cloud import datastore
 
+import constants
+
 
 class Capitals:
 
