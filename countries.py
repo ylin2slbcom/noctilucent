@@ -11,6 +11,11 @@ class Capitals:
         self.kind = "Capitals"
 
     def store_capital(self, rowid, country, name, countryCode, continent, location):
+    def delete_captial(self, key):
+        entity = self.fetch_capital(key)
+        if entity is not None:
+            entity.key.delete()
+
         key = self.ds.key(self.kind)
         entity = datastore.Entity(key)
 

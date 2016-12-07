@@ -46,7 +46,6 @@ class status(Resource):
         'delete': False,
         'list': False
         }, 200
-        #return constants.TEAM_NAME+'  is running!'
 
 
 @api.route('/api/capitals')
@@ -85,11 +84,12 @@ class Capital(Resource):
                 # swallow up exceptions
                 logging.exception('Oops!')
 
-                # pass
-
-    # def delete(self, id):
-    #     pass
-
+    def delete(self, id):
+        try:
+            countries.Capitals.delete_captial(id)
+            return 200
+        except Exception as e:
+            logging.exception("Delete failed")
 
 @app.errorhandler(500)
 def server_error(err):
