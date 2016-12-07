@@ -1,4 +1,6 @@
 from datetime import datetime
+import copy
+
 from google.cloud import datastore
 
 import constants
@@ -27,13 +29,21 @@ class Capitals:
     def fetch_capital(self, id):
         query = self.ds.query(kind=self.kind)
         query.add_filter('id', '=', id)
-        return self.get_query_results(query)[0]
+        return Capitals.nest_geopoint(self.get_query_results(query)[0])
 
     # GET /api/capitals
     def fetch_capitals(self):
         query = self.ds.query(kind=self.kind)
         # query.order = ['-timestamp']
-        return self.get_query_results(query)
+        return [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
+
+    @staticmethod
+    def nest_geopoint(flat):
+        nested = copy.deepcopy(flat)
+        del nested['Latitude']
+        del nested['Longitude']
+        nested['location'] = {'latitude': flat['Latitude'], 'longitude': flat['Longitude']}
+        return nested
 
     def get_query_results(self, query):
         results = list()
