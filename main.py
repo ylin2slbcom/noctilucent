@@ -38,14 +38,14 @@ class status(Resource):
 @api.route('/api/capitals')
 class Capitals(Resource):
     def get(self):
-        return Response(json.dumps(countries.Capitals().fetch_capitals()),  mimetype='application/json')
+        return countries.Capitals().fetch_capitals(), 200
 
 
 
 @api.route('/api/capitals/<string:id>')
 class Capital(Resource):
     def get(self, id):
-        return jsonify(countries.Capitals().fetch_capital(id)), 200
+        return countries.Capitals().fetch_capital(id), 200
 
     def put(self, id):
             data = {}
