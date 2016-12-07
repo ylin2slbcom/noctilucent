@@ -7,13 +7,14 @@ import base64
 from flask import Flask, request, Response
 from flask import jsonify
 from flask_restplus import Resource, Api, reqparse, fields
-
+from google.cloud import datastore
 
 import utility
 from flask import Blueprint
 
 import constants
 import countries
+
 
 
 api = Blueprint('capitals', __name__)
@@ -95,6 +96,34 @@ class Capital(Resource):
     def delete(self, id):
         pass
 
+
+def store_capital_as_string(capital, id): 
+    datastore_client = datastore.Client(project=constants.PROJECT_ID) 
+    key = datastore_client.key('capital_string', id) 
+    entity = datastore_client.get(key) 
+    if entity: 
+        datastore_client.delete(key) 
+     
+    entity = datastore.Entity(key) 
+    entity['json_string'] = json.dumps(capital) 
+    return datastore_client.put(entity) 
+ 
+def retrieve_capital_from_string(id): 
+    datastore_client = datastore.Client(project=constants.PROJECT_ID) 
+    key = datastore_client.key('capital_string', id) 
+    entity = datastore_client.get(key) 
+    if not entity: 
+        return {} 
+    print(entity['json_string']) 
+    return json.loads(entity['json_string']) 
+
+def delete_capital_as_string(id):
+    datastore_client = datastore.Client(project=constants.PROJECT_ID) 
+    key = datastore_client.key('capital_string', id) 
+    entity = datastore_client.get(key) 
+    if entity: 
+        datastore_client.delete(key) 
+    
 
 @app.errorhandler(500)
 def server_error(err):
