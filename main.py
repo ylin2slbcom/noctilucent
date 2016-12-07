@@ -4,7 +4,7 @@ import logging
 import json
 import base64
 
-from flask import Flask, request
+from flask import Flask, request, Response
 from flask import jsonify
 from flask_restplus import Resource, Api, reqparse, fields
 
@@ -38,17 +38,14 @@ class status(Resource):
 @api.route('/api/capitals')
 class Capitals(Resource):
     def get(self):
-        pass
+        return Response(json.dumps(countries.Capitals().fetch_capitals()),  mimetype='application/json')
 
 
 
 @api.route('/api/capitals/<string:id>')
 class Capital(Resource):
-    def get(self, id=None):
-        if id is None:
-            return jsonify(countries.Capitals().fetch_capitals()), 200
-        else:
-            return jsonify(countries.Capitals().fetch_capital(id)), 200
+    def get(self, id):
+        return jsonify(countries.Capitals().fetch_capital(id)), 200
 
     def put(self, id):
         capitals = countries.Capitals()
