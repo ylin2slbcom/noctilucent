@@ -45,7 +45,11 @@ class status(Resource):
         'insert': True,
         'fetch': True,
         'delete': True,
-        'list': True
+        'list': True,
+        'query': False,
+        'search': False,
+        'pubsub': False,
+        'storage': False
         }, 200
 
 
