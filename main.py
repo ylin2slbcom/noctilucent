@@ -244,8 +244,9 @@ class Store(Resource):
 
 @app.route('/map')
 def map():
-    return render_template('welcome.html')
-    return 'here we are'
+    caps_w_dups = countries.Capitals().fetch_capitals()
+    caps_wo_dups = sorted(set((cap['country'], cap['name']) for cap in caps_w_dups))
+    return render_template('welcome.html', capitals=caps_wo_dups)
 
 
 @app.route('/google_map')

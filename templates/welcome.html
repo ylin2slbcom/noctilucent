@@ -4,6 +4,13 @@
     <title>Noctilucent</title>
 </head>
 <body>
-    <p>dkjfhgkjdfhkg</p>
+    <table>
+        {% for capital in capitals %}
+        <tr>
+            <td>{{ capital[0] }}</td>
+            <td>{{ capital[1] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
 </body>
 </html>
