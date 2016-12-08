@@ -227,7 +227,7 @@ class Store(Resource):
             if 'bucket' in bucket_info:
                 bucket_name = bucket_info['bucket']
             
-            capital_record = Capital().get(id)
+            capital_record = countries.Capitals().fetch_capital(id)
             gcs = cloud_storage.CloudStorage()
             # gcs.create_bucket(capital_record, bucket_name, id)
             mesg, code = gcs.store_file_to_gcs(bucket_name, capital_record, id)
