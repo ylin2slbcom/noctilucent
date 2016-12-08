@@ -92,7 +92,7 @@ class Publish(Resource):
     @api.expect(topic_model, validate=True)
     def post(self, id):
         try:
-            capital = countries.Capitals().get_by_id(id)
+            capital = countries.Capitals().get_by_id(str(id))
             if capital is None:
                 return {"code": 0,  "message": "capital not found"}, 404
             pubsub_client = pubsub.Client()
