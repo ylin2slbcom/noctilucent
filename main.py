@@ -1,4 +1,5 @@
 """Main Entrypoint for the Application"""
+from __future__ import print_function
 
 import logging
 import json
@@ -96,10 +97,16 @@ class Publish(Resource):
     def post(self, id):
         try:
             capital = countries.Capitals().get_by_id(id)
+            logging.info('badaboom::capital is {}'.format(capital))####
+            print('badaboom::capital is {}'.format(capital))####
             if capital is None:
+                logging.info('badaboom::capital not found')####
+                print('badaboom::capital not found')####
                 return {"code": 0,  "message": "capital not found"}, 404
             pubsub_client = pubsub.Client()
             topic_name = request.get_json()['topic']
+            print('badaboom::topic name is {}'.format(topic_name))####
+            logging.info('badaboom::topic name is {}'.format(topic_name))####
 #            print(topic_name)
             topic = pubsub_client.topic(topic_name)
 #            print('ok...')
@@ -108,11 +115,17 @@ class Publish(Resource):
 #            return {}, 200  ### no need to return right?
             try:
                 topic.create()
+                print('badaboom::topic created!!!')
+                logging.info('badaboom::topic created!!!')
             except:
                 logging.info('probably topic {} already exists'.format(topic_name))
+                print('probably topic {} already exists'.format(topic_name))
+            logging.info('publishing... {}'.format(json.dumps(countries.Capitals.nest_geopoint(capital)).encode('utf-8')))
+            print('publishing... {}'.format(json.dumps(countries.Capitals.nest_geopoint(capital)).encode('utf-8')))            
             return {"messageId": topic.publish(json.dumps(countries.Capitals.nest_geopoint(capital)).encode('utf-8'))}, 200
         except:
             logging.exception("something went wrong, maybe already existing with this name not consumed?")
+            print("something went wrong, maybe already existing with this name not consumed?")
             return {"code": 0,  "message": "something went wrong, maybe already existing with this name not consumed?"}, 404  # should be some other error?
         
 
