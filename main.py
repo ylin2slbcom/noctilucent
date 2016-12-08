@@ -28,13 +28,17 @@ geo_point_model = api.model('GeoPoint', {
     'longitude': fields.Float(required=False),
     })
 
-capital_mode = api.model('Capital', {
+capital_model = api.model('Capital', {
     'id': fields.Integer(required=False),
     'country': fields.String(required=False),
     'name': fields.String(required=False),
     'location': fields.Nested(geo_point_model, required=False),
     'countryCode': fields.String(required=False),
     'continent': fields.String(required=False),
+    })
+
+storage_model = api.model('Bucket', {
+    'bucket': fields.String(required=True),
     })
 
 
@@ -55,7 +59,7 @@ class status(Resource):
 
 @api.route('/api/capitals')
 class Capitals(Resource):
-    @api.marshal_list_with(capital_mode)
+    @api.marshal_list_with(capital_model)
     def get(self):
         return countries.Capitals().fetch_capitals(), 200
 
@@ -63,7 +67,7 @@ class Capitals(Resource):
 
 @api.route('/api/capitals/<int:id>')
 class Capital(Resource):
-    @api.marshal_with(capital_mode)
+    @api.marshal_with(capital_model)
     def get(self, id):
         try:
             results = countries.Capitals().fetch_capital(id)
@@ -74,7 +78,7 @@ class Capital(Resource):
             logging.exception(e)
             return 'failed to fetch record', 404
 
-    @api.expect(capital_mode, validate=True)
+    @api.expect(capital_model, validate=True)
     def put(self, id):
             data = {}
             try:
@@ -115,6 +119,7 @@ class Capital(Resource):
             
 @api.route('/api/capitals/<int:id>/store')
 class Store(Resource):
+    @api.expect(storage_model, validate=True)
     def post(self, id):
         return 'good', 200
         
