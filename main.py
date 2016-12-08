@@ -251,7 +251,7 @@ def map():
 
 @app.route('/google_map')
 def google_map():
-    return 'google map'
+    return render_template('google_map.html')
 
 
 @app.route('/polymer')
