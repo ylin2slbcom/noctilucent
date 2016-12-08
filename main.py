@@ -161,6 +161,7 @@ class Capital(Resource):
             return 'ok', 200
         except Exception as e:
             logging.exception("Delete failed")
+            return 'failed to delete', 404
             
             
 @api.route('/api/capitals/<int:id>/store')
@@ -178,12 +179,14 @@ class Store(Resource):
             
             capital_record = Capital().get(id)
             gcs = cloud_storage.CloudStorage()
-            gcs.create_bucket(capital_record, bucket_name, id)
-            return "hi", 200
+            # gcs.create_bucket(capital_record, bucket_name, id)
+            
+            return gcs.store_file_to_gcs(bucket_name, capital_record, id)
 
         except Exception as e:
             # swallow up exceptions
             logging.exception('Oops!')        
+            return 'failed to store capital', 404
 
 def store_capital_as_string(capital, id): 
     datastore_client = datastore.Client(project=constants.PROJECT_ID) 
