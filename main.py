@@ -59,7 +59,7 @@ class status(Resource):
         'fetch': True,
         'delete': True,
         'list': True,
-        'query': False,
+        'query': True,
         'search': False,
         'pubsub': False,
         'storage': False
