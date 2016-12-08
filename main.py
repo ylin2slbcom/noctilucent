@@ -195,7 +195,7 @@ class Capital(Resource):
 @api.route('/api/capitals/<int:id>/store')
 class Store(Resource):
     @api.expect(storage_model, validate=True)
-    def get(self):
+    def get(self, id):
         try:
             bucket_info = request.get_json()
             if bucket_info == None:
