@@ -168,8 +168,12 @@ class Capital(Resource):
                 if 'continent' in country_from_input:
                     continent = country_from_input['continent']
                 if 'location' in country_from_input:
-                    latitude = country_from_input['location']['latitude']
-                    longitude = country_from_input['location']['longitude']
+                    location = country_from_input['location']
+                    if location is not None:
+                        if 'latitude' in location:
+                            latitude = location['latitude']
+                        if 'longitude' in location:
+                            longitude = location['longitude']
                 # print(name)
                 capitals = countries.Capitals()
                 capitals.store_capital(id, payloadid, countryName, name, countryCode, continent, latitude, longitude)
