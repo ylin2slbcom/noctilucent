@@ -75,7 +75,10 @@ class Capitals(Resource):
             query_string = args['query']
             search_string = args['search']
             if search_string is not None:
-                return [], 200
+                capitals = countries.Capitals().search_captial(search_string)
+                if len(capitals) < 1:
+                    return [], 404
+                return capitals, 200
             
             if query_string is not None:
                 splitted_query_string = query_string.split(':')
