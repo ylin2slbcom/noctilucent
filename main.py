@@ -60,7 +60,7 @@ class status(Resource):
         'delete': True,
         'list': True,
         'query': True,
-        'search': False,
+        'search': True,
         'pubsub': True,
         'storage': True
         }, 200
