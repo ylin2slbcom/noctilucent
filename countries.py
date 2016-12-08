@@ -66,7 +66,7 @@ class Capitals:
         return [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
 
     def search_captial(self, query_value):
-        capitals = []
+        capitals = set()
 #         query = self.ds.query(kind=self.kind)
 #         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
 #         capitals.extend(new_capitals)
@@ -79,22 +79,22 @@ class Capitals:
         filter_value = [('country', '=', query_value)]
         query = self.ds.query(kind=self.kind, filters=filter_value)
         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
-        capitals.extend(new_capitals)
+        capitals.update(new_capitals)
 
         filter_value = [('name', '=', query_value)]
         query = self.ds.query(kind=self.kind, filters=filter_value)
         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
-        capitals.extend(new_capitals)
+        capitals.update(new_capitals)
 
         filter_value = [('countryCode', '=', query_value)]
         query = self.ds.query(kind=self.kind, filters=filter_value)
         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
-        capitals.extend(new_capitals)
+        capitals.update(new_capitals)
 
         filter_value = [('continent', '=', query_value)]
         query = self.ds.query(kind=self.kind, filters=filter_value)
         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
-        capitals.extend(new_capitals)
+        capitals.update(new_capitals)
 
         # filter_value = [('latitude', '>=', query_value)]
         # query = self.ds.query(kind=self.kind, filters=filter_value)
@@ -106,7 +106,7 @@ class Capitals:
         # new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
         # capitals.extend(new_capitals)
 
-        return capitals
+        return list(capitals)
 
 
 
