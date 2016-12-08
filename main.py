@@ -177,7 +177,7 @@ class Store(Resource):
             
             capital_record = Capital().get(id)
             gcs = cloud_storage.CloudStorage()
-            gcs.create_bucket(capital_record, bucket_name)
+            gcs.create_bucket(capital_record, bucket_name, id)
             return "hi", 200
 
         except Exception as e:

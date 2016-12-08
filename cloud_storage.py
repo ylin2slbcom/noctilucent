@@ -24,14 +24,15 @@ class CloudStorage:
             print ('Error: Forbidden, Access denied for bucket {}'.format(bucket_name))
             return None
 
-    def create_bucket(self, capital_record, bucket_name):
+    def create_bucket(self, capital_record, bucket_name, capital_record_id):
         bucket_exists = self.check_bucket(bucket_name)
 
-        if bucket_exists is not None and not bucket_exists:
+        if bucket_exists is not None:
             try:
-                print ('creating bucket {}'.format(bucket_name))
-                self.gcs.create_bucket(bucket_name)
-                self.store_file_to_gcs(bucket_name, capital_record)
+                if not bucket_exists:
+                    print ('creating bucket {}'.format(bucket_name))
+                    self.gcs.create_bucket(bucket_name)
+                self.store_file_to_gcs(bucket_name, capital_record, capital_record_id)
                 return True
             except Exception as e:
                 print "Error: Create bucket Exception"
@@ -39,10 +40,10 @@ class CloudStorage:
                 return None
         return bucket_exists
 
-    def store_file_to_gcs(self, bucket_name, capital_record):
+    def store_file_to_gcs(self, bucket_name, capital_record, capital_record_id):
         if self.check_bucket(bucket_name):
             bucket = self.gcs.get_bucket(bucket_name)
-            filename = 'data.json'
+            filename = 'noctilucent_' + str(capital_record_id) + '.json'
             with open(filename, 'w') as outfile:
                 json.dump(capital_record, outfile)
             blob = Blob(filename, bucket)
