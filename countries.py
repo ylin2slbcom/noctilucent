@@ -66,9 +66,9 @@ class Capitals:
 
     def search_captial(self, query_value):
         capitals = []
-        query = self.ds.query(kind=self.kind)
-        new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
-        capitals.extend(new_capitals)
+#         query = self.ds.query(kind=self.kind)
+#         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
+#         capitals.extend(new_capitals)
 
         # filter_value = [('id', '=', query_value)]
         # query = self.ds.query(kind=self.kind, filters=filter_value)
