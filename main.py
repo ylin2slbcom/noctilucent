@@ -5,7 +5,7 @@ import logging
 import json
 import base64
 
-from flask import Flask, request, Response
+from flask import Flask, request, Response, render_template
 from flask import jsonify
 from flask_restplus import Resource, Api, reqparse, fields
 from google.cloud import datastore
@@ -244,6 +244,7 @@ class Store(Resource):
 
 @app.route('/map')
 def map():
+    return render_template('welcome.html')
     return 'here we are'
 
 
