@@ -57,7 +57,7 @@ class Capitals(Resource):
 
 
 
-@api.route('/api/capitals/<string:id>')
+@api.route('/api/capitals/<int:id>')
 class Capital(Resource):
     @api.marshal_with(capital_mode)
     def get(self, id):
@@ -107,6 +107,13 @@ class Capital(Resource):
             return 'ok', 200
         except Exception as e:
             logging.exception("Delete failed")
+            
+            
+@api.route('/api/capitals/<int:id>/store')
+class Store(Resource):
+    def post(self, id):
+        return 'good', 200
+        
 
 
 def store_capital_as_string(capital, id): 
