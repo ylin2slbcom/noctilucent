@@ -1,5 +1,6 @@
 from datetime import datetime
 import copy
+import json
 
 from google.cloud import datastore
 
@@ -66,7 +67,7 @@ class Capitals:
         return [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
 
     def search_captial(self, query_value):
-        capitals = set()
+        capitals = {}
 #         query = self.ds.query(kind=self.kind)
 #         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
 #         capitals.extend(new_capitals)
@@ -79,22 +80,22 @@ class Capitals:
         filter_value = [('country', '=', query_value)]
         query = self.ds.query(kind=self.kind, filters=filter_value)
         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
-        capitals.update(new_capitals)
+        capitals.update({json.dumps(capital): capital for capital in new_capitals})
 
         filter_value = [('name', '=', query_value)]
         query = self.ds.query(kind=self.kind, filters=filter_value)
         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
-        capitals.update(new_capitals)
+        capitals.update({json.dumps(capital): capital for capital in new_capitals})
 
         filter_value = [('countryCode', '=', query_value)]
         query = self.ds.query(kind=self.kind, filters=filter_value)
         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
-        capitals.update(new_capitals)
+        capitals.update({json.dumps(capital): capital for capital in new_capitals})
 
         filter_value = [('continent', '=', query_value)]
         query = self.ds.query(kind=self.kind, filters=filter_value)
         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
-        capitals.update(new_capitals)
+        capitals.update({json.dumps(capital): capital for capital in new_capitals})
 
         # filter_value = [('latitude', '>=', query_value)]
         # query = self.ds.query(kind=self.kind, filters=filter_value)
@@ -106,7 +107,7 @@ class Capitals:
         # new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
         # capitals.extend(new_capitals)
 
-        return list(capitals)
+        return list(capitals.values())
 
 
 
