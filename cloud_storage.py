@@ -3,6 +3,7 @@ from google.cloud.storage import Blob
 
 import constants
 import json
+from unidecode import unidecode
 
 
 class CloudStorage:
@@ -21,7 +22,7 @@ class CloudStorage:
             blob = bucket.blob(filename)
 
             try:
-                blob.upload_from_string(str(capital_record), client=self.gcs)
+                blob.upload_from_string(capital_record, client=self.gcs)
                 return 'Ok', 200
             except IOError as e:
                 print (str(e))
