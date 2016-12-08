@@ -240,6 +240,12 @@ class Store(Resource):
             # swallow up exceptions
             logging.exception('Oops!')        
             return 'failed to store capital', 404
+        
+
+@app.route('/map')
+def map():
+    return 'here we are'
+
 
 def store_capital_as_string(capital, id): 
     datastore_client = datastore.Client(project=constants.PROJECT_ID) 
