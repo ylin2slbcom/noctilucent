@@ -61,7 +61,7 @@ class status(Resource):
         'list': True,
         'query': False,
         'search': False,
-        'pubsub': False,
+        'pubsub': True,
         'storage': False
         }, 200
 
