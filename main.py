@@ -29,7 +29,7 @@ geo_point_model = api.model('GeoPoint', {
     'longitude': fields.Float(required=False),
     })
 
-capital_mode = api.model('Capital', {
+capital_model = api.model('Capital', {
     'id': fields.Integer(required=False),
     'country': fields.String(required=False),
     'name': fields.String(required=False),
@@ -38,9 +38,13 @@ capital_mode = api.model('Capital', {
     'continent': fields.String(required=False),
     })
 
+storage_model = api.model('Bucket', {
+    'bucket': fields.String(required=True),
+    })
 topic_model = api.model('Topic', {
     'topic': fields.String(required=False),
     })
+
 
 @api.route('/api/status')
 class status(Resource):
@@ -49,13 +53,17 @@ class status(Resource):
         'insert': True,
         'fetch': True,
         'delete': True,
-        'list': True
+        'list': True,
+        'query': False,
+        'search': False,
+        'pubsub': False,
+        'storage': False
         }, 200
 
 
 @api.route('/api/capitals')
 class Capitals(Resource):
-    @api.marshal_list_with(capital_mode)
+    @api.marshal_list_with(capital_model)
     def get(self):
         return countries.Capitals().fetch_capitals(), 200
 
@@ -85,8 +93,9 @@ class Publish(Resource):
         
 
 @api.route('/api/capitals/<string:id>')
+@api.route('/api/capitals/<int:id>')
 class Capital(Resource):
-    @api.marshal_with(capital_mode)
+    @api.marshal_with(capital_model)
     def get(self, id):
         try:
             results = countries.Capitals().fetch_capital(id)
@@ -97,7 +106,7 @@ class Capital(Resource):
             logging.exception(e)
             return 'failed to fetch record', 404
 
-    @api.expect(capital_mode, validate=True)
+    @api.expect(capital_model, validate=True)
     def put(self, id):
             data = {}
             try:
@@ -134,6 +143,14 @@ class Capital(Resource):
             return 'ok', 200
         except Exception as e:
             logging.exception("Delete failed")
+            
+            
+@api.route('/api/capitals/<int:id>/store')
+class Store(Resource):
+    @api.expect(storage_model, validate=True)
+    def post(self, id):
+        return 'good', 200
+        
 
 
 def store_capital_as_string(capital, id): 
