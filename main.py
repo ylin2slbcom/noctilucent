@@ -207,8 +207,9 @@ class Store(Resource):
             bucket = storage_client.get_bucket(bucket_name)
             results = []
             blobs = bucket.list_blobs()
-            for blob in blobs:
-                results.append(blob.name)
+            if blobs is not None:
+                for blob in blobs:
+                    results.append(blob.name)
                 
             return str(results), 200
         except Exception as e:
