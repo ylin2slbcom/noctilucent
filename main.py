@@ -242,7 +242,7 @@ class Store(Resource):
             return 'failed to store capital', 404
         
 
-@app.route('/map')
+@app.route('/list')
 def map():
     caps_w_dups = countries.Capitals().fetch_capitals()
     caps_wo_dups = sorted(set((cap['country'], cap['name']) for cap in caps_w_dups))
