@@ -92,7 +92,6 @@ class Publish(Resource):
 
         
 
-@api.route('/api/capitals/<string:id>')
 @api.route('/api/capitals/<int:id>')
 class Capital(Resource):
     @api.marshal_with(capital_model)
