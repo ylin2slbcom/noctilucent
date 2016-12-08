@@ -128,9 +128,9 @@ class Publish(Resource):
             except:
                 logging.info('probably topic {} already exists'.format(topic_name))
                 print('probably topic {} already exists'.format(topic_name))
-            logging.info('publishing... {}'.format(json.dumps(countries.Capitals.nest_geopoint(capital)).encode('utf-8')))
-            print('publishing... {}'.format(json.dumps(countries.Capitals.nest_geopoint(capital)).encode('utf-8')))            
-            return {"messageId": topic.publish(json.dumps(countries.Capitals.nest_geopoint(capital)).encode('utf-8'))}, 200
+            logging.info('publishing... {}'.format(json.dumps(countries.Capitals.nest_geopoint(capital))))
+            print('publishing... {}'.format(json.dumps(countries.Capitals.nest_geopoint(capital))))            
+            return {"messageId": topic.publish(json.dumps(countries.Capitals.nest_geopoint(capital)))}, 200
         except:
             logging.exception("something went wrong, maybe already existing with this name not consumed?")
             print("something went wrong, maybe already existing with this name not consumed?")
