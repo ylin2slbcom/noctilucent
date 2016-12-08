@@ -3,7 +3,6 @@ from google.cloud.storage import Blob
 
 import constants
 import json
-from unidecode import unidecode
 
 
 class CloudStorage:
