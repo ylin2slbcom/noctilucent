@@ -17,7 +17,7 @@ class CloudStorage:
             storage_client = storage.Client()
             bucket = storage_client.get_bucket(bucket_name)
 
-            filename = 'noctilucent_' + str(capital_record_id) + '.json'
+            filename = str(capital_record_id)
             blob = bucket.blob(filename)
 
             try:
