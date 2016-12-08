@@ -44,9 +44,10 @@ class Capitals:
 
     @staticmethod
     def nest_geopoint(flat):
-        nested = copy.deepcopy(flat)
-        del nested['latitude']
-        del nested['longitude']
+        # nested = copy.deepcopy(flat)
+        # del nested['latitude']
+        # del nested['longitude']
+        nested = {key: flat[key] for key in flat if key not in ('latitude', 'longitude')}
         nested['location'] = {'latitude': flat['latitude'], 'longitude': flat['longitude']}
         return nested
 
