@@ -76,22 +76,22 @@ class Capitals:
         # new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
         # capitals.extend(new_capitals)
 
-        filter_value = [('country', '>=', query_value)]
+        filter_value = [('country', '=', query_value)]
         query = self.ds.query(kind=self.kind, filters=filter_value)
         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
         capitals.extend(new_capitals)
 
-        filter_value = [('name', '>=', query_value)]
+        filter_value = [('name', '=', query_value)]
         query = self.ds.query(kind=self.kind, filters=filter_value)
         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
         capitals.extend(new_capitals)
 
-        filter_value = [('countryCode', '>=', query_value)]
+        filter_value = [('countryCode', '=', query_value)]
         query = self.ds.query(kind=self.kind, filters=filter_value)
         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
         capitals.extend(new_capitals)
 
-        filter_value = [('continent', '>=', query_value)]
+        filter_value = [('continent', '=', query_value)]
         query = self.ds.query(kind=self.kind, filters=filter_value)
         new_capitals = [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
         capitals.extend(new_capitals)
