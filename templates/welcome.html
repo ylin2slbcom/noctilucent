@@ -5,12 +5,20 @@
 </head>
 <body>
     <table>
-        {% for capital in capitals %}
-        <tr>
-            <td>{{ capital[0] }}</td>
-            <td>{{ capital[1] }}</td>
-        </tr>
-        {% endfor %}
+        <thead>
+            <tr style="text-align: left">
+                <th>Country</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for capital in capitals %}
+            <tr>
+                <td>{{ capital[0] }}</td>
+                <td>{{ capital[1] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 </body>
 </html>
