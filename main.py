@@ -230,7 +230,7 @@ class Store(Resource):
             capital_record = countries.Capitals().fetch_capital(id)
             gcs = cloud_storage.CloudStorage()
             # gcs.create_bucket(capital_record, bucket_name, id)
-            mesg, code = gcs.store_file_to_gcs(bucket_name, capital_record, id)
+            mesg, code = gcs.store_file_to_gcs(bucket_name, dict(capital_record), id)
             return mesg, code
 
         except Exception as e:
