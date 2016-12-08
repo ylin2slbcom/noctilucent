@@ -103,6 +103,10 @@ class Publish(Resource):
             #topic.create() #... don't create a topic, you misunderstand =/...
 #            print('yeah??')
 #            return {}, 200  ### no need to return right?
+            try:
+                topic.create()
+            except:
+                logging.info('probably topic {} already exists'.format(topic_name))
             topic.publish(json.dumps(countries.Capitals.nest_geopoint(capital)).encode('utf-8'))
         except:
             logging.exception("something went wrong, maybe already existing with this name not consumed?")
