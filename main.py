@@ -60,7 +60,7 @@ class status(Resource):
         'delete': True,
         'list': True,
         'query': True,
-        'search': False,
+        'search': True,
         'pubsub': True,
         'storage': True
         }, 200
@@ -75,7 +75,10 @@ class Capitals(Resource):
             query_string = args['query']
             search_string = args['search']
             if search_string is not None:
-                return [], 200
+                capitals = countries.Capitals().search_captial(search_string)
+                if len(capitals) < 1:
+                    return [], 404
+                return capitals, 200
             
             if query_string is not None:
                 splitted_query_string = query_string.split(':')
@@ -92,7 +95,7 @@ class Publish(Resource):
     @api.expect(topic_model, validate=True)
     def post(self, id):
         try:
-            capital = countries.Capitals().get_by_id(str(id))
+            capital = countries.Capitals().get_by_id(id)
             if capital is None:
                 return {"code": 0,  "message": "capital not found"}, 404
             pubsub_client = pubsub.Client()
@@ -103,7 +106,11 @@ class Publish(Resource):
             #topic.create() #... don't create a topic, you misunderstand =/...
 #            print('yeah??')
 #            return {}, 200  ### no need to return right?
-            topic.publish(json.dumps(countries.Capitals.nest_geopoint(capital)).encode('utf-8'))
+            try:
+                topic.create()
+            except:
+                logging.info('probably topic {} already exists'.format(topic_name))
+            return {"messageId": topic.publish(json.dumps(countries.Capitals.nest_geopoint(capital)).encode('utf-8'))}, 200
         except:
             logging.exception("something went wrong, maybe already existing with this name not consumed?")
             return {"code": 0,  "message": "something went wrong, maybe already existing with this name not consumed?"}, 404  # should be some other error?
