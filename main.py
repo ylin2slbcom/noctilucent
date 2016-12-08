@@ -202,8 +202,10 @@ class Store(Resource):
             capital_record = Capital().get(id)
             gcs = cloud_storage.CloudStorage()
             # gcs.create_bucket(capital_record, bucket_name, id)
-            
-            return gcs.store_file_to_gcs(bucket_name, capital_record, id)
+            mesg, code = gcs.store_file_to_gcs(bucket_name, capital_record, id)
+            if code == 200:
+                return 200
+            return mesg, code
 
         except Exception as e:
             # swallow up exceptions
