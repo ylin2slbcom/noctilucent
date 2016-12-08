@@ -58,6 +58,13 @@ class Capitals:
 
     def delete_capital(self, id):
         self.ds.delete(self.ds.key(self.kind, id))
+        
+    def query_capital(self, qeury_key, query_value):
+        filter_value = [(qeury_key, '=', query_value)]
+        query = self.ds.query(kind=self.kind, filters=filter_value)
+        return [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
+
+        
 
 
 

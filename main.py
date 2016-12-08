@@ -38,6 +38,11 @@ capital_model = api.model('Capital', {
     'continent': fields.String(required=False),
     })
 
+capitals_request_parser = reqparse.RequestParser(bundle_errors=True)
+capitals_request_parser.add_argument('query', type=str, required=False)
+capitals_request_parser.add_argument('search', type=str, required=False)
+
+
 storage_model = api.model('Bucket', {
     'bucket': fields.String(required=True),
     })
@@ -64,12 +69,25 @@ class status(Resource):
 @api.route('/api/capitals')
 class Capitals(Resource):
     @api.marshal_list_with(capital_model)
+    @api.expect(capitals_request_parser, validate=True)
     def get(self):
-        return countries.Capitals().fetch_capitals(), 200
+            args = capitals_request_parser.parse_args()
+            query_string = args['query']
+            search_string = args['search']
+            if search_string is not None:
+                return [], 200
+            
+            if query_string is not None:
+                splitted_query_string = query_string.split(':')
+                if len(splitted_query_string) != 2:
+                    return 'wrong query format', 400
+                
+                return countries.Capitals().query_capital(splitted_query_string[0], splitted_query_string[1]), 200                
+            return countries.Capitals().fetch_capitals(), 200
+    
 
 
-
-@api.route('/api/capitals/<string:id>/publish')
+@api.route('/api/capitals/<int:id>/publish')
 class Publish(Resource):
     @api.expect(topic_model, validate=True)
     def post(self, id):
