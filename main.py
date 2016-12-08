@@ -248,6 +248,16 @@ def map():
     return 'here we are'
 
 
+@app.route('/google_map')
+def google_map():
+    return 'google map'
+
+
+@app.route('/polymer')
+def polymer_map():
+    return 'polymer map'
+
+
 def store_capital_as_string(capital, id): 
     datastore_client = datastore.Client(project=constants.PROJECT_ID) 
     key = datastore_client.key('capital_string', id) 
