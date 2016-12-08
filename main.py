@@ -10,6 +10,7 @@ from flask import jsonify
 from flask_restplus import Resource, Api, reqparse, fields
 from google.cloud import datastore
 from google.cloud import pubsub
+from google.cloud import storage
 
 import utility
 from flask import Blueprint
@@ -42,6 +43,9 @@ capital_model = api.model('Capital', {
 capitals_request_parser = reqparse.RequestParser(bundle_errors=True)
 capitals_request_parser.add_argument('query', type=str, required=False)
 capitals_request_parser.add_argument('search', type=str, required=False)
+
+storage_request_parser = reqparse.RequestParser(bundle_errors=True)
+storage_request_parser.add_argument('bucket', type=str, required=False)
 
 
 storage_model = api.model('Bucket', {
@@ -194,15 +198,11 @@ class Capital(Resource):
             
 @api.route('/api/capitals/<int:id>/store')
 class Store(Resource):
-    @api.expect(storage_model, validate=True)
+    @api.expect(storage_request_parser)
     def get(self, id):
         try:
-            bucket_info = request.get_json()
-            if bucket_info == None:
-                return {}, 400
-                        
-            if 'bucket' in bucket_info:
-                bucket_name = bucket_info['bucket']
+            args = storage_request_parser.parse_args()
+            bucket_name = args['bucket']
             storage_client = storage.Client()
             bucket = storage_client.get_bucket(bucket_name)
             results = []
