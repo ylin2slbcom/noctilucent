@@ -3,6 +3,7 @@ import copy
 
 from google.cloud import datastore
 
+
 import constants
 
 
@@ -36,6 +37,10 @@ class Capitals:
         query = self.ds.query(kind=self.kind)
         # query.order = ['-timestamp']
         return [Capitals.nest_geopoint(x) for x in self.get_query_results(query)]
+
+    # should be static or class or something, but whatever...
+    def get_by_id(self, id):
+        return self.ds.get(self.ds.key(self.kind, id))
 
     @staticmethod
     def nest_geopoint(flat):

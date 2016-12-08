@@ -8,6 +8,7 @@ from flask import Flask, request, Response
 from flask import jsonify
 from flask_restplus import Resource, Api, reqparse, fields
 from google.cloud import datastore
+from google.cloud import pubsub
 
 import utility
 from flask import Blueprint
@@ -37,6 +38,9 @@ capital_mode = api.model('Capital', {
     'continent': fields.String(required=False),
     })
 
+topic_model = api.model('Topic', {
+    'topic': fields.String(required=False),
+    })
 
 @api.route('/api/status')
 class status(Resource):
@@ -56,6 +60,29 @@ class Capitals(Resource):
         return countries.Capitals().fetch_capitals(), 200
 
 
+
+@api.route('/api/capitals/<string:id>/publish')
+class Publish(Resource):
+    @api.expect(topic_model, validate=True)
+    def post(self, id):
+        try:
+            capital = countries.Capitals().get_by_id(id)
+            if capital is None:
+                return {"code": 0,  "message": "capital not found"}, 404
+            pubsub_client = pubsub.Client()
+            topic_name = request.get_json()['topic']
+#            print(topic_name)
+            topic = pubsub_client.topic(topic_name)
+#            print('ok...')
+            topic.create()
+#            print('yeah??')
+#            return {}, 200  ### no need to return right?
+        except:
+            logging.exception("something went wrong, maybe already existing with this name not consumed?")
+            return {"code": 0,  "message": "something went wrong, maybe already existing with this name not consumed?"}, 404  # should be some other error?
+        
+
+        
 
 @api.route('/api/capitals/<string:id>')
 class Capital(Resource):
