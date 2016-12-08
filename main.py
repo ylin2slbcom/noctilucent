@@ -106,6 +106,8 @@ class Publish(Resource):
             topic_name = request.get_json()['topic']
             meow = topic_name.split('/')
             pubsub_client = pubsub.Client(meow[1])
+            print('badaboom::nyaaa? {}'.format(meow[1]))####
+            logging.info('badaboom::nyaaa? {}'.format(meow[1]))####
             topic_name = meow[3]
             print('badaboom::topic name is {}'.format(topic_name))####
             logging.info('badaboom::topic name is {}'.format(topic_name))####
