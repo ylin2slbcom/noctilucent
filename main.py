@@ -195,6 +195,27 @@ class Capital(Resource):
 @api.route('/api/capitals/<int:id>/store')
 class Store(Resource):
     @api.expect(storage_model, validate=True)
+    def get(self):
+        try:
+            bucket_info = request.get_json()
+            if bucket_info == None:
+                return {}, 400
+                        
+            if 'bucket' in bucket_info:
+                bucket_name = bucket_info['bucket']
+            storage_client = storage.Client()
+            bucket = storage_client.get_bucket(bucket_name)
+            results = []
+            blobs = bucket.list_blobs()
+            for blob in blobs:
+                results.append(blob.name)
+                
+            return str(results), 200
+        except Exception as e:
+            return str(e), 404
+        
+    
+    @api.expect(storage_model, validate=True)
     def post(self, id):
         data = {}
         try:
@@ -209,8 +230,6 @@ class Store(Resource):
             gcs = cloud_storage.CloudStorage()
             # gcs.create_bucket(capital_record, bucket_name, id)
             mesg, code = gcs.store_file_to_gcs(bucket_name, capital_record, id)
-            if code == 200:
-                return 200
             return mesg, code
 
         except Exception as e:
