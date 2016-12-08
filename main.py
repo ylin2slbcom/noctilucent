@@ -103,7 +103,7 @@ class Publish(Resource):
                 logging.info('badaboom::capital not found')####
                 print('badaboom::capital not found')####
                 return {"code": 0,  "message": "capital not found"}, 404
-            pubsub_client = pubsub.Client()
+            pubsub_client = pubsub.Client('the-depot')
             topic_name = request.get_json()['topic']
             print('badaboom::topic name is {}'.format(topic_name))####
             logging.info('badaboom::topic name is {}'.format(topic_name))####
