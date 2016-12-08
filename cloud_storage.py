@@ -35,8 +35,8 @@ class CloudStorage:
                 self.store_file_to_gcs(bucket_name, capital_record, capital_record_id)
                 return True
             except Exception as e:
-                print "Error: Create bucket Exception"
-                print e
+                print ("Error: Create bucket Exception")
+                print (e)
                 return None
         return bucket_exists
 

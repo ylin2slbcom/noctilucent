@@ -100,9 +100,10 @@ class Publish(Resource):
 #            print(topic_name)
             topic = pubsub_client.topic(topic_name)
 #            print('ok...')
-            topic.create()
+            #topic.create() #... don't create a topic, you misunderstand =/...
 #            print('yeah??')
 #            return {}, 200  ### no need to return right?
+            topic.publish(json.dumps(countries.Capitals.nest_geopoint(capital)).encode('utf-8'))
         except:
             logging.exception("something went wrong, maybe already existing with this name not consumed?")
             return {"code": 0,  "message": "something went wrong, maybe already existing with this name not consumed?"}, 404  # should be some other error?
