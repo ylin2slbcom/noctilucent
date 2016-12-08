@@ -107,7 +107,7 @@ class Publish(Resource):
                 topic.create()
             except:
                 logging.info('probably topic {} already exists'.format(topic_name))
-            topic.publish(json.dumps(countries.Capitals.nest_geopoint(capital)).encode('utf-8'))
+            return {"messageId": topic.publish(json.dumps(countries.Capitals.nest_geopoint(capital)).encode('utf-8'))}, 200
         except:
             logging.exception("something went wrong, maybe already existing with this name not consumed?")
             return {"code": 0,  "message": "something went wrong, maybe already existing with this name not consumed?"}, 404  # should be some other error?
