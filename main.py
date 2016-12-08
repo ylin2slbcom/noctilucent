@@ -15,7 +15,7 @@ from flask import Blueprint
 
 import constants
 import countries
-
+import cloud_storage
 
 
 api = Blueprint('capitals', __name__)
@@ -62,7 +62,7 @@ class status(Resource):
         'query': True,
         'search': False,
         'pubsub': True,
-        'storage': False
+        'storage': True
         }, 200
 
 
@@ -167,9 +167,23 @@ class Capital(Resource):
 class Store(Resource):
     @api.expect(storage_model, validate=True)
     def post(self, id):
-        return 'good', 200
-        
+        data = {}
+        try:
+            bucket_info = request.get_json()
+            if bucket_info == None:
+                return {}, 400
+                        
+            if 'bucket' in bucket_info:
+                bucket_name = bucket_info['bucket']
+            
+            capital_record = Capital().get(id)
+            gcs = cloud_storage.CloudStorage()
+            gcs.create_bucket(capital_record, bucket_name)
+            return "hi", 200
 
+        except Exception as e:
+            # swallow up exceptions
+            logging.exception('Oops!')        
 
 def store_capital_as_string(capital, id): 
     datastore_client = datastore.Client(project=constants.PROJECT_ID) 
