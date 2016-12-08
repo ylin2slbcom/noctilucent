@@ -251,7 +251,9 @@ def map():
 
 @app.route('/google_map')
 def google_map():
-    return render_template('google_map.html')
+    caps_w_dups = countries.Capitals().fetch_capitals()
+    caps_wo_dups = set((cap['location']['latitude'], cap['location']['longitude']) for cap in caps_w_dups)
+    return render_template('google_map.html', lat_longs=caps_wo_dups)
 
 
 @app.route('/polymer')
