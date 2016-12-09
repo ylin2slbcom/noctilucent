@@ -54,7 +54,7 @@
                 api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec" zoom="4" disable-default-ui>
         {% for lat_long in lat_longs %}
         <google-map-marker latitude="{{ lat_long[0] }}" longitude="{{ lat_long[1] }}"
-                           title="Go Giants!" draggable="true"></google-map-marker>
+                           title="{{ lat_long[3]}}, {{lat_long[2]}}" draggable="true"></google-map-marker>
         {% endfor %}
     </google-map>
 </body>

@@ -259,7 +259,7 @@ def google_map():
 @app.route('/polymer')
 def polymer_map():
     caps_w_dups = countries.Capitals().fetch_capitals()
-    caps_wo_dups = set((cap['location']['latitude'], cap['location']['longitude']) for cap in caps_w_dups)
+    caps_wo_dups = set((cap['location']['latitude'], cap['location']['longitude'], cap['country'], cap['name']) for cap in caps_w_dups)
     return render_template('index.html', lat_longs=caps_wo_dups)
 
 @app.errorhandler(500)
