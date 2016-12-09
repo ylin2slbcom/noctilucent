@@ -53,52 +53,10 @@
 </head>
 
 <body unresolved>
-    <template is="dom-bind">
-
-        <google-map map="{{map}}" latitude="2.909047" longitude="101.6524803" disable-default-ui
-                    zoom="13" api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec">
-            <google-map-marker latitude="2.909047" longitude="101.6524803"
-                               title="MaGIC" draggable="true"></google-map-marker>
-        </google-map>
-
-        <google-map-directions map="{{map}}"
-                               start-address="{{start}}"
-                               end-address="{{end}}"
-                               travel-mode="[[travelMode]]"></google-map-directions>
-
-        <paper-card elevation="2">
-            <paper-icon-item>
-                <iron-icon icon="search" item-icon></iron-icon>
-                <paper-input label="Start address" value="{{start}}"></paper-input>
-            </paper-icon-item>
-
-            <paper-icon-item>
-                <iron-icon icon="search" item-icon></iron-icon>
-                <paper-input label="End address" value="{{end}}"></paper-input>
-            </paper-icon-item>
-
-            <paper-tabs selected="{{travelMode}}" attr-for-selected="label">
-                <paper-tab label="DRIVING">
-                    <iron-icon icon="maps:directions-car"></iron-icon>
-                    <span>DRIVING</span>
-                </paper-tab>
-                <paper-tab label="WALKING">
-                    <iron-icon icon="maps:directions-walk"></iron-icon>
-                    <span>WALKING</span>
-                </paper-tab>
-                <paper-tab label="BICYCLING">
-                    <iron-icon icon="maps:directions-bike"></iron-icon>
-                    <span>BICYCLING</span>
-                </paper-tab>
-                <paper-tab label="TRANSIT">
-                    <iron-icon icon="maps:directions-transit"></iron-icon>
-                    <span>TRANSIT</span>
-                </paper-tab>
-            </paper-tabs>
-        </paper-card>
-    </template>
+    <google-map latitude="37.779" longitude="-122.3892"
+                api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec" zoom="13" disable-default-ui>
+        <google-map-marker latitude="37.779" longitude="-122.3892"
+                           title="Go Giants!" draggable="true"></google-map-marker>
+    </google-map>
 </body>
-<script>
-  document.querySelector('google-map-directions').map = this.map;
-</script>
 </html>
