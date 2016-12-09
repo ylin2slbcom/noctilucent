@@ -55,10 +55,10 @@
 <body unresolved>
     <dom-module id="map-element">
         <template>
-        <google-map latitude="-25.363" longitude="131.044" map="{% raw %}{{map}}{% endraw %}"
+        <google-map latitude="{% if map_lat is defined %}{{map_lat}}{% else %}-25.363{% endif %}" longitude="{% if map_lng is defined %}{{map_lng}}{% else %}131.044{% endif %}" map="{% raw %}{{map}}{% endraw %}"
                     
                     api-key="AIzaSyBsTv3hVvBB0bMS6NNjHMzlIA5bwvz6Ajo"  
-                    zoom="4" disable-default-ui>
+                    zoom="4" ><!--disable-default-ui> TODO: reenable, just don't have a fucking mouse-->
             <!--api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec"-->  <!--TODO: temporary hack until get the proper api perm-->
             {% for lat_long in lat_longs %}
             <google-map-marker latitude="{{ lat_long[0] }}" longitude="{{ lat_long[1] }}"
@@ -67,8 +67,8 @@
             {% endfor %}
         </google-map>
             <google-map-directions map="{% raw %}{{map}}{% endraw %}"
-                                   start-address="Singapore, Singapore"
-                                   end-address="Kuala Lumpur, Malaysia"
+                                   start-address="{{start}}"
+                                   end-address="{{end}}"
                                    api-key="AIzaSyBsTv3hVvBB0bMS6NNjHMzlIA5bwvz6Ajo"></google-map-directions> 
         </template>
 
@@ -80,6 +80,13 @@
                     console.log(e);
                     console.log(detail);
                     console.log(sender);
+                    {% if end is defined %}
+                        window.location = "/polymer/" + document.querySelector('google-map').latitude + '/' + + document.querySelector('google-map').longitude +'/' + e.target.title;
+                    {% elif start is defined %}
+                        window.location = "/polymer/" + document.querySelector('google-map').latitude + '/' + + document.querySelector('google-map').longitude +'/' + escape("{{start}}") + '/' + e.target.title;
+                    {% else %}
+                        window.location = "/polymer/" + document.querySelector('google-map').latitude + '/' + + document.querySelector('google-map').longitude +'/' + e.target.title;
+                    {% endif %}
                 }
             });
         </script>
