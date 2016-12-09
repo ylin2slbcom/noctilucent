@@ -292,4 +292,5 @@ def server_error(err):
 
 if __name__ == '__main__':
     # Used for running locally
-    app.run(host='127.0.0.1', port=8080, debug=True)
+    app.run(host='127.0.0.1', port=8080, debug=True, use_reloader=False, use_evalex=False)
+
