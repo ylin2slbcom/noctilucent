@@ -1,0 +1,27 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/google-map/google-map.html">
+
+<dom-module id="my-new-view">
+    <!-- Defines the element's style and local DOM -->
+    <template>
+        <style>
+            :host {
+                display: block;
+                padding: 16px;
+                height: 100%;
+                margin: 0;
+            }
+        </style>
+
+        <h1>New view</h1>
+        <google-map fit-to-marker api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec">
+            <google-map-marker latitude="37.78" longitude="-122.4" draggable="true"></google-map-marker>
+        </google-map>
+    </template>
+    <!-- Creates the element's prototype and registers it -->
+    <script>
+    Polymer({
+      is: 'my-new-view'
+    });
+    </script>
+</dom-module>
