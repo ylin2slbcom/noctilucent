@@ -243,7 +243,7 @@ class Store(Resource):
         
 
 @app.route('/list')
-def map():
+def list():
     caps_w_dups = countries.Capitals().fetch_capitals()
     caps_wo_dups = sorted(set((cap['country'], cap['name']) for cap in caps_w_dups))
     return render_template('welcome.html', capitals=caps_wo_dups)
@@ -259,49 +259,6 @@ def google_map():
 @app.route('/polymer')
 def polymer_map():
     return 'polymer map'
-
-
-def store_capital_as_string(capital, id): 
-    datastore_client = datastore.Client(project=constants.PROJECT_ID) 
-    key = datastore_client.key('capital_string', id) 
-    entity = datastore_client.get(key) 
-    if entity: 
-        datastore_client.delete(key) 
-     
-    entity = datastore.Entity(key) 
-    entity['json_string'] = json.dumps(capital) 
-    return datastore_client.put(entity) 
- 
-def retrieve_capital_from_string(id): 
-    datastore_client = datastore.Client(project=constants.PROJECT_ID) 
-    key = datastore_client.key('capital_string', id) 
-    entity = datastore_client.get(key) 
-    if not entity: 
-        return {} 
-    print(entity['json_string']) 
-    return json.loads(entity['json_string']) 
-
-def retrieve_capitals_from_string():
-    datastore_client = datastore.Client(project=constants.PROJECT_ID) 
-    query = datastore_client.query(kind='capital_string')
-    results = query.fetch()
-    capitals = []
-    if results is None:
-        return capitals
-    
-    for entity in results:
-        capitals.append(json.loads(entity['json_string']) )
-    return capitals
-
-    
-
-def delete_capital_as_string(id):
-    datastore_client = datastore.Client(project=constants.PROJECT_ID) 
-    key = datastore_client.key('capital_string', id) 
-    entity = datastore_client.get(key) 
-    if entity: 
-        datastore_client.delete(key) 
-    
 
 @app.errorhandler(500)
 def server_error(err):

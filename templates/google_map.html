@@ -28,20 +28,6 @@
           zoom: 4,
           center: uluru
         });
-        //  Make an array of the LatLng's of the markers you want to show
-/*        var LatLngList = new Array();
-        {% for lat_long in lat_longs %}
-        LatLngList.push(new google.maps.LatLng({{ lat_long[0] }}, {{ lat_long[1] }}));
-        {% endfor %}
-        //  Create a new viewpoint bound
-        var bounds = new google.maps.LatLngBounds();
-        //  Go through each...
-        for (var i = 0, LtLgLen = LatLngList.length; i < LtLgLen; i++) {
-            //  And increase the bounds to take this point
-            bounds.extend(LatLngList[i]);
-        }
-        //  Fit these bounds to the map
-        map.fitBounds(bounds);*/
 
         {% for lat_long in lat_longs %}
         new google.maps.Marker({
