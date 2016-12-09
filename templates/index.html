@@ -50,12 +50,43 @@
 </head>
 
 <body unresolved>
-    <google-map latitude="-25.363" longitude="131.044"
-                api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec" zoom="4" disable-default-ui>
-        {% for lat_long in lat_longs %}
-        <google-map-marker latitude="{{ lat_long[0] }}" longitude="{{ lat_long[1] }}"
-                           title="{{ lat_long[3]}}, {{lat_long[2]}}" draggable="true"></google-map-marker>
-        {% endfor %}
-    </google-map>
+    <dom-module id="map-element">
+        <template>
+        <google-map latitude="-25.363" longitude="131.044" 
+                    
+                    api-key="AIzaSyBsTv3hVvBB0bMS6NNjHMzlIA5bwvz6Ajo"  
+                    zoom="4" disable-default-ui>
+            <!--api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec"-->  <!--TODO: temporary hack until get the proper api perm-->
+            {% for lat_long in lat_longs %}
+            <google-map-marker latitude="{{ lat_long[0] }}" longitude="{{ lat_long[1] }}"
+                               title="{{ lat_long[3]}}, {{lat_long[2]}}" draggable="true"
+                                click-events="true" on-google-map-marker-click="markerClicked"></google-map-marker>
+            {% endfor %}
+        </google-map>
+            <google-map-directions 
+                                   start-address="Singapore, Singapore"
+                                   end-address="Kuala Lumpur, Malaysia"
+                                   api-key="AIzaSyBsTv3hVvBB0bMS6NNjHMzlIA5bwvz6Ajo"></google-map-directions> 
+        </template>
+
+        <script>
+            Polymer({
+                is: "map-element",
+                markerClicked: function(e, detail, sender) {
+                    console.log('google_map_marker_click'); // TODO: do something worth shit here
+                    console.log(e);
+                    console.log(detail);
+                    console.log(sender);
+                }
+            });
+        </script>
+    </dom-module>
+    <map-element></map-element>
+    <script>
+  var gMap = document.querySelector('google-map');
+  gMap.addEventListener('api-load', function(e) {
+    document.querySelector('google-map-directions').map = this.map;
+  });
+    </script>
 </body>
 </html>
