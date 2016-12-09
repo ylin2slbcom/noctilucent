@@ -50,10 +50,12 @@
 </head>
 
 <body unresolved>
-    <google-map latitude="37.779" longitude="-122.3892"
-                api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec" zoom="13" disable-default-ui>
-        <google-map-marker latitude="37.779" longitude="-122.3892"
+    <google-map latitude="-25.363" longitude="131.044"
+                api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec" zoom="4" disable-default-ui>
+        {% for lat_long in lat_longs %}
+        <google-map-marker latitude="{{ lat_long[0] }}" longitude="{{ lat_long[1] }}"
                            title="Go Giants!" draggable="true"></google-map-marker>
+        {% endfor %}
     </google-map>
 </body>
 </html>
