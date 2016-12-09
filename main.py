@@ -262,6 +262,24 @@ def polymer_map():
     caps_wo_dups = set((cap['location']['latitude'], cap['location']['longitude'], cap['country'], cap['name']) for cap in caps_w_dups)
     return render_template('index.html', lat_longs=caps_wo_dups)
 
+@app.route('/polymer/<string:map_lat>/<string:map_lng>')
+def polymer_mapll(map_lat, map_lng):
+    caps_w_dups = countries.Capitals().fetch_capitals()
+    caps_wo_dups = set((cap['location']['latitude'], cap['location']['longitude'], cap['country'], cap['name']) for cap in caps_w_dups)
+    return render_template('index.html', map_lat=map_lat, map_lng=map_lng, lat_longs=caps_wo_dups)
+
+@app.route('/polymer/<string:map_lat>/<string:map_lng>/<string:start>')
+def polymer_map1(map_lat, map_lng, start):
+    caps_w_dups = countries.Capitals().fetch_capitals()
+    caps_wo_dups = set((cap['location']['latitude'], cap['location']['longitude'], cap['country'], cap['name']) for cap in caps_w_dups)
+    return render_template('index.html', lat_longs=caps_wo_dups, map_lat=map_lat, map_lng=map_lng, start=start)
+
+@app.route('/polymer/<string:map_lat>/<string:map_lng>/<string:start>/<string:end>')
+def polymer_map2(map_lat, map_lng, start, end):
+    caps_w_dups = countries.Capitals().fetch_capitals()
+    caps_wo_dups = set((cap['location']['latitude'], cap['location']['longitude'], cap['country'], cap['name']) for cap in caps_w_dups)
+    return render_template('index.html', lat_longs=caps_wo_dups, map_lat=map_lat, map_lng=map_lng, start=start, end=end)
+
 @app.errorhandler(500)
 def server_error(err):
     """Error handler"""

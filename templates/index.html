@@ -25,6 +25,9 @@
     <link rel="import" href="{{url_for('static', filename='bower_components/iron-icons/maps-icons.html')}}">
     <link rel="import" href="{{url_for('static', filename='bower_components/paper-tabs/paper-tabs.html')}}">
 
+    <link rel="import" href="{{url_for('static', filename='bower_components/iron-meta/iron-meta.html')}}">
+
+
     <style is="custom-style">
         paper-tabs {
             --paper-tabs-selection-bar-color: #0D47A1;
@@ -50,12 +53,44 @@
 </head>
 
 <body unresolved>
-    <google-map latitude="-25.363" longitude="131.044"
-                api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec" zoom="4" disable-default-ui>
-        {% for lat_long in lat_longs %}
-        <google-map-marker latitude="{{ lat_long[0] }}" longitude="{{ lat_long[1] }}"
-                           title="{{ lat_long[3]}}, {{lat_long[2]}}" draggable="true"></google-map-marker>
-        {% endfor %}
-    </google-map>
+    <dom-module id="map-element">
+        <template>
+        <google-map latitude="{% if map_lat is defined %}{{map_lat}}{% else %}-25.363{% endif %}" longitude="{% if map_lng is defined %}{{map_lng}}{% else %}131.044{% endif %}" map="{% raw %}{{map}}{% endraw %}"
+                    
+                    api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec"  
+                    zoom="4" ><!--disable-default-ui> TODO: reenable, just don't have a fucking mouse-->
+            <!--api-key="AIzaSyBsTv3hVvBB0bMS6NNjHMzlIA5bwvz6Ajo"-->  <!--restored proper api key, backup just in case-->
+            {% for lat_long in lat_longs %}
+            <google-map-marker latitude="{{ lat_long[0] }}" longitude="{{ lat_long[1] }}"
+                               title="{{ lat_long[3]}}, {{lat_long[2]}}" draggable="true"
+                               map="{% raw %}{{map}}{% endraw %}" click-events="true" on-google-map-marker-click="markerClicked"></google-map-marker>
+            {% endfor %}
+        </google-map>
+            <google-map-directions map="{% raw %}{{map}}{% endraw %}"
+                                   start-address="{{start}}"
+                                   end-address="{{end}}"
+                                   api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec"></google-map-directions> 
+        </template>
+
+        <script>
+            Polymer({
+                is: "map-element",
+                markerClicked: function(e, detail, sender) {
+                    console.log('google_map_marker_click'); // TODO: do something worth shit here
+                    console.log(e);
+                    console.log(detail);
+                    console.log(sender);
+                    {% if end is defined %}
+                        window.location = "/polymer/" + document.querySelector('google-map').latitude + '/' + + document.querySelector('google-map').longitude +'/' + e.target.title;
+                    {% elif start is defined %}
+                        window.location = "/polymer/" + document.querySelector('google-map').latitude + '/' + + document.querySelector('google-map').longitude +'/' + escape("{{start}}") + '/' + e.target.title;
+                    {% else %}
+                        window.location = "/polymer/" + document.querySelector('google-map').latitude + '/' + + document.querySelector('google-map').longitude +'/' + e.target.title;
+                    {% endif %}
+                }
+            });
+        </script>
+    </dom-module>
+    <map-element></map-element>
 </body>
 </html>
