@@ -1,111 +1,104 @@
-<!--
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
+﻿<!doctype html>
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+<html>
+<head>
+    <title>PolymerMapsCodelab</title>
 
-    <title>My App</title>
-    <meta name="description" content="My App description">
-
-    <link rel="icon" href="/images/favicon.ico">
-
-    <!-- See https://goo.gl/OOhYW5 -->
-    <link rel="manifest" href="/manifest.json">
-
-    <!-- See https://goo.gl/qRE0vM -->
-    <meta name="theme-color" content="#3f51b5">
-
-    <!-- Add to homescreen for Chrome on Android. Fallback for manifest.json -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="My App">
-
-    <!-- Add to homescreen for Safari on iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="My App">
 
-    <!-- Homescreen icons -->
-    <link rel="apple-touch-icon" href="/images/manifest/icon-48x48.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/images/manifest/icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="96x96" href="/images/manifest/icon-96x96.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/images/manifest/icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="192x192" href="/images/manifest/icon-192x192.png">
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 
-    <!-- Tile icon for Windows 8 (144x144 + tile color) -->
-    <meta name="msapplication-TileImage" content="/images/manifest/icon-144x144.png">
-    <meta name="msapplication-TileColor" content="#3f51b5">
-    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="stylesheet" href="styles.css">
 
-    <script>
-      // Setup Polymer options
-      window.Polymer = {
-        dom: 'shadow',
-        lazyRegister: true
-      };
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="bower_components/google-map/google-map.html">
+    <link rel="import" href="bower_components/google-map/google-map-directions.html">
 
-      // Load webcomponentsjs polyfill if browser does not support native Web Components
-      (function() {
-        'use strict';
+    <link rel="stylesheet" href="styles.css">
 
-        var onload = function() {
-          // For native Imports, manually fire WebComponentsReady so user code
-          // can use the same code path for native and polyfill'd imports.
-          if (!window.HTMLImports) {
-            document.dispatchEvent(
-              new CustomEvent('WebComponentsReady', {bubbles: true})
-            );
-          }
-        };
+    <link rel="import" href="bower_components/iron-icon/iron-icon.html">
+    <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="bower_components/paper-item/paper-item.html">
+    <link rel="import" href="bower_components/paper-item/paper-icon-item.html">
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
+    <link rel="import" href="bower_components/paper-card/paper-card.html">
 
-        var webComponentsSupported = (
-          'registerElement' in document
-          && 'import' in document.createElement('link')
-          && 'content' in document.createElement('template')
-        );
+    <link rel="import" href="bower_components/iron-icons/maps-icons.html">
+    <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
 
-        if (!webComponentsSupported) {
-          var script = document.createElement('script');
-          script.async = true;
-          script.src = '/bower_components/webcomponentsjs/webcomponents-lite.min.js';
-          script.onload = onload;
-          document.head.appendChild(script);
-        } else {
-          onload();
+    <style is="custom-style">
+        paper-tabs {
+            --paper-tabs-selection-bar-color: #0D47A1;
+            margin-top: 16px;
         }
-      })();
 
-      // Load pre-caching Service Worker
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/service-worker.js');
-        });
-      }
-    </script>
+        paper-tab {
+            --paper-tab-ink: #BBDEFB;
+        }
 
-    <link rel="import" href="/src/my-app.html">
+            /* Other styles that make things more pleasant.
+        These could instead be added in styles.css since they
+        do not use any Polymer styling features. */
+            paper-tab iron-icon {
+                margin-right: 10px;
+            }
 
-    <style>
-      body {
-        margin: 0;
-        font-family: 'Roboto', 'Noto', sans-serif;
-        line-height: 1.5;
-        min-height: 100vh;
-        background-color: #eeeeee;
-      }
+            paper-tab.iron-selected {
+                background: rgb(66, 133, 244);
+                color: white;
+            }
     </style>
-  </head>
-  <body>
-    <my-app></my-app>
-    <!-- Built with love using Polymer Starter Kit -->
-  </body>
+</head>
+
+<body unresolved>
+    <template is="dom-bind">
+
+        <google-map map="{{map}}" latitude="2.909047" longitude="101.6524803" disable-default-ui
+                    zoom="13" api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec">
+            <google-map-marker latitude="2.909047" longitude="101.6524803"
+                               title="MaGIC" draggable="true"></google-map-marker>
+        </google-map>
+
+        <google-map-directions map="{{map}}"
+                               start-address="{{start}}"
+                               end-address="{{end}}"
+                               travel-mode="[[travelMode]]"></google-map-directions>
+
+        <paper-card elevation="2">
+            <paper-icon-item>
+                <iron-icon icon="search" item-icon></iron-icon>
+                <paper-input label="Start address" value="{{start}}"></paper-input>
+            </paper-icon-item>
+
+            <paper-icon-item>
+                <iron-icon icon="search" item-icon></iron-icon>
+                <paper-input label="End address" value="{{end}}"></paper-input>
+            </paper-icon-item>
+
+            <paper-tabs selected="{{travelMode}}" attr-for-selected="label">
+                <paper-tab label="DRIVING">
+                    <iron-icon icon="maps:directions-car"></iron-icon>
+                    <span>DRIVING</span>
+                </paper-tab>
+                <paper-tab label="WALKING">
+                    <iron-icon icon="maps:directions-walk"></iron-icon>
+                    <span>WALKING</span>
+                </paper-tab>
+                <paper-tab label="BICYCLING">
+                    <iron-icon icon="maps:directions-bike"></iron-icon>
+                    <span>BICYCLING</span>
+                </paper-tab>
+                <paper-tab label="TRANSIT">
+                    <iron-icon icon="maps:directions-transit"></iron-icon>
+                    <span>TRANSIT</span>
+                </paper-tab>
+            </paper-tabs>
+        </paper-card>
+    </template>
+</body>
+<script>
+  document.querySelector('google-map-directions').map = this.map;
+</script>
 </html>
