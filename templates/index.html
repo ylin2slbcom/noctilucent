@@ -57,9 +57,9 @@
         <template>
         <google-map latitude="{% if map_lat is defined %}{{map_lat}}{% else %}-25.363{% endif %}" longitude="{% if map_lng is defined %}{{map_lng}}{% else %}131.044{% endif %}" map="{% raw %}{{map}}{% endraw %}"
                     
-                    api-key="AIzaSyBsTv3hVvBB0bMS6NNjHMzlIA5bwvz6Ajo"  
+                    api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec"  
                     zoom="4" ><!--disable-default-ui> TODO: reenable, just don't have a fucking mouse-->
-            <!--api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec"-->  <!--TODO: temporary hack until get the proper api perm-->
+            <!--api-key="AIzaSyBsTv3hVvBB0bMS6NNjHMzlIA5bwvz6Ajo"-->  <!--restored proper api key, backup just in case-->
             {% for lat_long in lat_longs %}
             <google-map-marker latitude="{{ lat_long[0] }}" longitude="{{ lat_long[1] }}"
                                title="{{ lat_long[3]}}, {{lat_long[2]}}" draggable="true"
@@ -69,7 +69,7 @@
             <google-map-directions map="{% raw %}{{map}}{% endraw %}"
                                    start-address="{{start}}"
                                    end-address="{{end}}"
-                                   api-key="AIzaSyBsTv3hVvBB0bMS6NNjHMzlIA5bwvz6Ajo"></google-map-directions> 
+                                   api-key="AIzaSyARzGSC4ZknM8GJC-Ih9djcudkLEGKEgec"></google-map-directions> 
         </template>
 
         <script>
